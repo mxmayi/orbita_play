@@ -1,0 +1,21 @@
+name: Publish verified Android test installer
+on:
+  push:
+    branches: [gh-pages]
+    paths: [.github/workflows/publish-tested-apk.yml]
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download and verify approved APK
+        run: |
+          curl --fail --location --retry 2 --output orbita-0.5.2-demo-cloudtest.apk https://raw.githubusercontent.com/mxmayi/orbita_play/b8fd0a77d2bbf1cb84b3bb52b2b6a7e9e9c13263/downloads/orbita-0.5.2-demo-cloudtest.apk
+          echo '49e44388e1095d67006dc1338b2d77a72e8d116f7492cd2d692c0ab65c4052ff  orbita-0.5.2-demo-cloudtest.apk' | sha256sum --check
+      - name: Publish installer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create android-cloud-0.5.2 orbita-0.5.2-demo-cloudtest.apk --repo mxmayi/orbita_play --target b8fd0a77d2bbf1cb84b3bb52b2b6a7e9e9c13263 --title 'Órbita 0.5.2 · Pruebas online' --notes 'APK Android de pruebas online. Descarga el archivo APK de Assets. Usa Internet sin USB. Instalación separada de la edición local; no migra saldos. NPC remoto no habilitado. Android 7 o posterior. SHA256: 49e44388e1095d67006dc1338b2d77a72e8d116f7492cd2d692c0ab65c4052ff. Código del juego privado; este repositorio solo distribuye artefactos.'
