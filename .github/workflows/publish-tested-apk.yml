@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Download and verify approved APK
         run: |
-          curl --fail --location --retry 2 --output orbita-0.5.3-demo-cloudtest.apk https://raw.githubusercontent.com/mxmayi/orbita_play/513f41a55318bb099b54a4d1a43dbb3196913371/downloads/orbita-0.5.3-demo-cloudtest.apk
-          echo '8a60fa6c6c623c677edb548013058cb7a81f54ca7e2a0d1bdd6944fed5f6e2bf  orbita-0.5.3-demo-cloudtest.apk' | sha256sum --check
+          curl --fail --location --retry 2 --output orbita-0.5.5-demo-cloudtest.apk https://raw.githubusercontent.com/mxmayi/orbita_play/07b01fac98f01b134216c901cdc6d088a9213e3b/downloads/orbita-0.5.5-demo-cloudtest.apk
+          echo 'c5f7c2742b30ac6e1256ca210c127f803d970ef2169641f78cce571f92d7c7fd  orbita-0.5.5-demo-cloudtest.apk' | sha256sum --check
       - name: Publish installer
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create android-cloud-0.5.3 orbita-0.5.3-demo-cloudtest.apk --repo mxmayi/orbita_play --target "$GITHUB_SHA" --title 'Órbita 0.5.3 · Interfaz móvil' --notes 'Compilación 8. Inicio móvil sin scroll, lobby paginado, mesa vertical, apuestas por porcentaje del bote y menú inferior. Actualiza la edición online 0.5.2 con la misma identidad y firma de pruebas. Requiere Internet y Android 7 o posterior. Dos jugadores; NPC remoto y seis asientos siguen pendientes. 123 pruebas unitarias/servidor y 32 E2E aprobadas; prueba física de esta versión pendiente. SHA256: 8a60fa6c6c623c677edb548013058cb7a81f54ca7e2a0d1bdd6944fed5f6e2bf. Código privado; solo artefactos de prueba.'
+          gh release create android-cloud-0.5.5 orbita-0.5.5-demo-cloudtest.apk --repo mxmayi/orbita_play --target "$GITHUB_SHA" --title 'Órbita 0.5.5 · Seis jugadores y NPC opcionales' --notes 'Compilación 10. Mesas de seis jugadores, NPC opcionales mediante botón, entrada con fichas ajustables y manos automáticas. Actualiza la edición de pruebas online con la misma identidad y firma. Requiere Internet y Android 7 o posterior. 158 pruebas de lógica/servidor, incluidas 10 PostgreSQL, y 40 E2E aprobadas. Servidor en nube y bundle nativo verificados con reconexión, NPC, reparto y liquidación. Prueba en teléfono físico pendiente. SHA256: c5f7c2742b30ac6e1256ca210c127f803d970ef2169641f78cce571f92d7c7fd. Código privado; solo instalador de pruebas.'
